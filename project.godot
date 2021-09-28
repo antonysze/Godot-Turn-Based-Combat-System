@@ -1,0 +1,99 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[ {
+"base": "Reference",
+"class": "TBCombatBaseGameMode",
+"language": "GDScript",
+"path": "res://Assets/Script/TurnBasedCombat/GameMode/TBCombatBaseGameMode.gd"
+}, {
+"base": "Reference",
+"class": "TBCombatBaseSkill",
+"language": "GDScript",
+"path": "res://Assets/Script/TurnBasedCombat/Skill/TBCombatBaseSkill.gd"
+}, {
+"base": "Node",
+"class": "TBCombatCharacterController",
+"language": "GDScript",
+"path": "res://Assets/Script/TurnBasedCombat/TBCombatCharacterController.gd"
+}, {
+"base": "Resource",
+"class": "TBCombatCharacterData",
+"language": "GDScript",
+"path": "res://Assets/Script/TurnBasedCombat/TBCombatCharacterData.gd"
+}, {
+"base": "Reference",
+"class": "TBCombatCharacterNode",
+"language": "GDScript",
+"path": "res://Assets/Script/TurnBasedCombat/TBCombatCharacterNode.gd"
+}, {
+"base": "TBCombatBaseSkill",
+"class": "TBCombatDamageSkill",
+"language": "GDScript",
+"path": "res://Assets/Script/TurnBasedCombat/Skill/TBCombatDamageSkill.gd"
+}, {
+"base": "TBCombatBaseGameMode",
+"class": "TBCombatIPGameMode",
+"language": "GDScript",
+"path": "res://Assets/Script/TurnBasedCombat/GameMode/TBCombatIPGameMode.gd"
+}, {
+"base": "Node",
+"class": "TBCombatManager",
+"language": "GDScript",
+"path": "res://Assets/Script/TurnBasedCombat/TBCombatManager.gd"
+}, {
+"base": "Resource",
+"class": "TBCombatSetting",
+"language": "GDScript",
+"path": "res://Assets/Script/TurnBasedCombat/TBCombatSetting.gd"
+}, {
+"base": "TBCombatBaseGameMode",
+"class": "TBCombatTPGameMode",
+"language": "GDScript",
+"path": "res://Assets/Script/TurnBasedCombat/GameMode/TBCombatTPGameMode.gd"
+}, {
+"base": "TBCombatBaseGameMode",
+"class": "TBCombatTSGameMode",
+"language": "GDScript",
+"path": "res://Assets/Script/TurnBasedCombat/GameMode/TBCombatTSGameMode.gd"
+} ]
+_global_script_class_icons={
+"TBCombatBaseGameMode": "",
+"TBCombatBaseSkill": "",
+"TBCombatCharacterController": "",
+"TBCombatCharacterData": "",
+"TBCombatCharacterNode": "",
+"TBCombatDamageSkill": "",
+"TBCombatIPGameMode": "",
+"TBCombatManager": "",
+"TBCombatSetting": "",
+"TBCombatTPGameMode": "",
+"TBCombatTSGameMode": ""
+}
+
+[application]
+
+config/name="SuperB"
+config/icon="res://icon.png"
+
+[display]
+
+window/size/width=1600
+window/size/height=900
+window/stretch/mode="viewport"
+window/stretch/aspect="keep_height"
+
+[physics]
+
+common/enable_pause_aware_picking=true
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"

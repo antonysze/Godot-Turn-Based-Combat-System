@@ -1,0 +1,63 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Assets/Script/TurnBasedCombat/TBCombatManager.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Script/TurnBasedCombat/TBCombatController.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Script/TurnBasedCombat/TBCombatSetting.gd" type="Script" id=3]
+
+[sub_resource type="Resource" id=1]
+script = ExtResource( 3 )
+combat_mode = 2
+max_action_point = -1.0
+character_act_once = false
+auto_end_turn = true
+
+[node name="CombatManager" type="Node"]
+script = ExtResource( 1 )
+setting = SubResource( 1 )
+debug_mode = true
+ui_node_path = NodePath("CombatController")
+
+[node name="CombatController" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+ally_file_path = "res://Assets/Scene/AllyController.tscn"
+enemy_file_path = "res://Assets/Scene/EnemyController.tscn"
+
+[node name="AllyHolder" type="HBoxContainer" parent="CombatController"]
+anchor_top = 0.7
+anchor_right = 1.0
+anchor_bottom = 1.0
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnemyHolder" type="HBoxContainer" parent="CombatController"]
+anchor_top = 0.054
+anchor_right = 1.0
+anchor_bottom = 0.6
+alignment = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Log" type="Label" parent="CombatController"]
+anchor_top = 0.6
+anchor_right = 1.0
+anchor_bottom = 0.8
+margin_top = -65.5159
+margin_right = 40.0
+margin_bottom = -51.5159
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InputArea" type="Control" parent="CombatController"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0

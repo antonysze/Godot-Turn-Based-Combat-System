@@ -1,0 +1,250 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Assets/Script/TurnBasedCombat/TBCombatAllyController.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Sprite/PlaceHolder/AllyBackground.PNG" type="Texture" id=2]
+[ext_resource path="res://Assets/Script/TurnBasedCombat/TBCombatSkillController.gd" type="Script" id=3]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0 )
+colors = PoolColorArray( 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0, 0.226519, 1 )
+colors = PoolColorArray( 0.976471, 0.266667, 0.266667, 1, 1, 0.894118, 0.305882, 1, 0.309804, 0.980392, 0.392157, 1 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[sub_resource type="Gradient" id=5]
+offsets = PoolRealArray( 0 )
+colors = PoolColorArray( 1, 1, 1, 0.67451 )
+
+[sub_resource type="GradientTexture" id=6]
+gradient = SubResource( 5 )
+
+[sub_resource type="Gradient" id=7]
+offsets = PoolRealArray( 0 )
+colors = PoolColorArray( 1, 1, 1, 0.454902 )
+
+[sub_resource type="GradientTexture" id=8]
+gradient = SubResource( 7 )
+width = 200
+
+[sub_resource type="Gradient" id=9]
+offsets = PoolRealArray( 0 )
+colors = PoolColorArray( 0, 0, 0, 0.717647 )
+
+[sub_resource type="GradientTexture" id=10]
+gradient = SubResource( 9 )
+
+[node name="AllyController" type="Control"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -512.0
+margin_top = -300.0
+margin_right = -347.0
+margin_bottom = -52.0
+rect_min_size = Vector2( 165, 248 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+hp_bar_path = NodePath("TextureRect/HpBar")
+skill_holder_path = NodePath("TextureRect")
+preset_skill_controller = [ NodePath("TextureRect/SkillButton"), NodePath("TextureRect/SkillButton2") ]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HpBar" type="TextureProgress" parent="TextureRect"]
+anchor_right = 1.0
+margin_top = 66.0
+margin_bottom = 82.0
+texture_under = SubResource( 2 )
+texture_progress = SubResource( 4 )
+nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SkillButton" type="Control" parent="TextureRect"]
+anchor_right = 1.0
+anchor_bottom = 0.5
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+name_node_path = NodePath("Label3")
+cost_node_path = NodePath("CostLabel")
+cooldown_node_path = NodePath("CooldownLabel")
+cast_button_path = NodePath("TextureButton")
+
+[node name="ColorRect3" type="ColorRect" parent="TextureRect/SkillButton"]
+anchor_right = 1.0
+margin_bottom = 28.0
+color = Color( 0, 0.0352941, 0.2, 1 )
+
+[node name="Label3" type="Label" parent="TextureRect/SkillButton"]
+anchor_right = 1.0
+margin_bottom = 28.0
+rect_scale = Vector2( 1.1, 1.1 )
+text = "Skill Name"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="TextureRect/SkillButton"]
+margin_left = 52.7262
+margin_top = 33.7047
+margin_right = 72.7262
+margin_bottom = 53.7047
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CostLabel" type="Label" parent="TextureRect/SkillButton"]
+margin_left = 25.6957
+margin_top = 37.0418
+margin_right = 63.6957
+margin_bottom = 51.0418
+rect_scale = Vector2( 1.1, 1.1 )
+text = "2"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="ColorRect" parent="TextureRect/SkillButton"]
+margin_left = 121.326
+margin_top = 33.7047
+margin_right = 141.326
+margin_bottom = 53.7047
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CooldownLabel" type="Label" parent="TextureRect/SkillButton"]
+margin_left = 94.2959
+margin_top = 37.0418
+margin_right = 132.296
+margin_bottom = 51.0418
+rect_scale = Vector2( 1.1, 1.1 )
+text = "0"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="TextureRect/SkillButton"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture_pressed = SubResource( 6 )
+texture_hover = SubResource( 8 )
+texture_disabled = SubResource( 10 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="SkillButton2" type="Control" parent="TextureRect"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+name_node_path = NodePath("Label3")
+cost_node_path = NodePath("Label")
+cooldown_node_path = NodePath("Label2")
+cast_button_path = NodePath("TextureButton")
+
+[node name="ColorRect3" type="ColorRect" parent="TextureRect/SkillButton2"]
+anchor_right = 1.0
+margin_top = 73.5391
+margin_bottom = 101.539
+color = Color( 0, 0.0352941, 0.2, 1 )
+
+[node name="Label3" type="Label" parent="TextureRect/SkillButton2"]
+anchor_right = 1.0
+margin_top = 73.5391
+margin_bottom = 101.539
+rect_scale = Vector2( 1.1, 1.1 )
+text = "Skill Name"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="TextureRect/SkillButton2"]
+margin_left = 52.7262
+margin_top = 107.244
+margin_right = 72.7262
+margin_bottom = 127.244
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="TextureRect/SkillButton2"]
+margin_left = 25.6957
+margin_top = 110.581
+margin_right = 63.6957
+margin_bottom = 124.581
+rect_scale = Vector2( 1.1, 1.1 )
+text = "2"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect2" type="ColorRect" parent="TextureRect/SkillButton2"]
+margin_left = 121.326
+margin_top = 107.244
+margin_right = 141.326
+margin_bottom = 127.244
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="TextureRect/SkillButton2"]
+margin_left = 94.2959
+margin_top = 110.581
+margin_right = 132.296
+margin_bottom = 124.581
+rect_scale = Vector2( 1.1, 1.1 )
+text = "0"
+align = 2
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureButton" type="TextureButton" parent="TextureRect/SkillButton2"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture_pressed = SubResource( 6 )
+texture_hover = SubResource( 8 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}

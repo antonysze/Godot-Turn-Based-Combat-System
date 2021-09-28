@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Assets/Sprite/PlaceHolder/Enemy_1.PNG" type="Texture" id=1]
+[ext_resource path="res://Assets/Script/TurnBasedCombat/TBCombatEnemyController.gd" type="Script" id=2]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0 )
+colors = PoolColorArray( 0, 0, 0, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="Gradient" id=3]
+offsets = PoolRealArray( 0, 0.226519, 1 )
+colors = PoolColorArray( 0.976471, 0.266667, 0.266667, 1, 1, 0.894118, 0.305882, 1, 0.309804, 0.980392, 0.392157, 1 )
+
+[sub_resource type="GradientTexture" id=4]
+gradient = SubResource( 3 )
+
+[node name="EnemyController" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -1600.0
+margin_bottom = -900.0
+rect_min_size = Vector2( 306, 488 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+hp_bar_path = NodePath("TextureRect/HpBar")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+texture = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HpBar" type="TextureProgress" parent="TextureRect"]
+anchor_right = 1.0
+margin_top = 0.410072
+margin_bottom = 16.4101
+texture_under = SubResource( 2 )
+texture_progress = SubResource( 4 )
+nine_patch_stretch = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
