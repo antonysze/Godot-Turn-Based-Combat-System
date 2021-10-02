@@ -52,6 +52,7 @@ func update_cooldown(cooldown):
 
 
 func enable_control(enable: bool):
+
 	able_to_control = enable
 	update_cast_button()
 

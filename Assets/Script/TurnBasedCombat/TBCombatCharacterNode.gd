@@ -58,8 +58,12 @@ func start_turn():
 		skill.reduce_cooldown()
 	if controller != null:
 		controller.enable_control(true)
-	
+	else:
+		printerr("Character controller not found")
+
 
 func end_turn():
 	if controller != null:
 		controller.enable_control(false)
+	else:
+		printerr("Character controller not found")

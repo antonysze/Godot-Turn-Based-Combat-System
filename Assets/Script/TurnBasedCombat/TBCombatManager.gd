@@ -2,7 +2,7 @@ class_name TBCombatManager
 extends Node
 
 
-signal start_combat(manager)
+signal combat_start(manager)
 signal start_turn(ally_turn)
 signal end_turn(ally_turn)
 signal cast_skill(caster, skill, target)
@@ -86,6 +86,8 @@ func _ready():
 		skills.append(skill3)
 
 		init([ally1, ally2], [enemy1], setting)
+		
+		start_combat()
 
 
 func init(allies: Array, enemies: Array, setting: TBCombatSetting = null):
@@ -134,8 +136,9 @@ func add_character(character_node, slots, position: int = -1):
 func start_combat():
 	game_state = CombatGameState.Begin
 	ally_turn = true
-	emit_signal("start_combat", self)
+	emit_signal("combat_start", self)
 	if ui != null:
+		ui.start_combat()
 		yield(ui, "beginning_complete")
 	start_turn()
 

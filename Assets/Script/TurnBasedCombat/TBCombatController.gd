@@ -74,6 +74,10 @@ func add_enemy(data):
 	enemy.init_character(data, self)
 
 
+func start_combat():
+	_show_log("Combat start")
+
+
 func start_select_target(can_target_ally: bool, can_target_enemy: bool):
 	pass
 
@@ -188,7 +192,11 @@ func _on_InputArea_gui_input(event: InputEvent):
 			_fast_forward_skill_log()
 		elif !_effect_animating:
 			_clear_log()
-			emit_signal("next_action")
+			match _game_state:
+				CombatGameState.Begin:
+					emit_signal("beginning_complete")
+				CombatGameState.Combat:
+					emit_signal("next_action")
 
 
 func _on_cast_skill(caster, skill_id):
