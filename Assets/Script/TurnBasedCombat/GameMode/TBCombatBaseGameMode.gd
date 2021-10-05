@@ -11,3 +11,7 @@ func _init(combat_manager):
 
 func check_turn_end(last_action_caster) -> bool:
     return true
+
+
+func is_ally_turn() -> bool:
+    return true

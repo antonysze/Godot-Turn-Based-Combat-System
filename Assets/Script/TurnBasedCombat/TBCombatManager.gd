@@ -26,6 +26,7 @@ var selected_caster = null
 var selected_skill = null
 
 var current_action_point = -1
+var max_action_point = -1
 
 
 var game_mode_manager
@@ -148,6 +149,7 @@ func exit_combat():
 	ally_slots = []
 	enemy_slots = []
 	current_action_point = -1
+	max_action_point = -1
 
 
 func check_game_end() -> bool:
@@ -185,13 +187,24 @@ func start_turn():
 func end_turn():
 	emit_signal("end_turn", ally_turn)
 	game_mode_manager.end_turn()
+	if ui != null:
+		ui.update_end_turn_button(game_mode_manager.is_ally_turn())
 
 
-func recover_action_point():
-	current_action_point = setting.max_action_point
+func set_action_point(point, max_point = null):
+	current_action_point = point
+	if max_point != null:
+		max_action_point = max_point
+	if ui != null:
+		ui.update_ap(point, max_action_point)
+
+
+func decrease_action_point(amount):
+	set_action_point(current_action_point - amount)
 
 
 func character_action(caster, skill, target = null):
+	decrease_action_point(skill.cast_cost)
 	skill.cast(caster, target)
 	emit_signal("cast_skill", caster, skill, target)
 	if ui != null:

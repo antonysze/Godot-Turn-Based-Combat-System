@@ -18,12 +18,14 @@ export(NodePath) var enemy_holder_path = "EnemyHolder"
 export(NodePath) var log_path = "Log"
 export(NodePath) var input_area_path = "InputArea"
 export(NodePath) var end_turn_button_path = "EndTurnButton"
+export(NodePath) var ap_label_path = "ApLabel"
 
 onready var _ally_holder = get_node(ally_holder_path)
 onready var _enemy_holder = get_node(enemy_holder_path)
 onready var _log = get_node(log_path)
 onready var _input_area = get_node(input_area_path)
 onready var _end_turn_button = get_node_or_null(end_turn_button_path)
+onready var _ap_label = get_node_or_null(ap_label_path)
 onready var _tween = get_node_or_null("Tween")
 
 # onready var _turn_order_holder = $TurnOrderList
@@ -54,7 +56,7 @@ func _ready():
 	_tween.connect("tween_completed", self, "_on_tween_completed")
 
 	if _end_turn_button != null:
-		_end_turn_button.connect("tween_completed", self, "_on_end_turn_button_click")
+		_end_turn_button.connect("pressed", self, "_on_end_turn_button_click")
 		
 	# _action_buttons = $BottomWindow/CharacterActionButtons.get_children()
 
@@ -87,6 +89,20 @@ func cast_skill(caster, skill, targets):
 	_controllers[caster.combat_id].set_hp(caster.current_hp)
 	for target in targets:
 		_controllers[target.combat_id].set_hp(target.current_hp)
+
+
+func update_ap(ap, max_ap = null):
+	if _ap_label == null:
+		return
+	var text = String(ap)
+	if max_ap != null:
+		text += "/" + String(max_ap)
+	_ap_label.text = text
+
+
+func update_end_turn_button(enable: bool):
+	if _end_turn_button != null:
+		_end_turn_button.disabled = !enable
 
 
 # func _set_action_buttons(action_names: Array):

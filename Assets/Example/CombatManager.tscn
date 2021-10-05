@@ -7,7 +7,7 @@
 [sub_resource type="Resource" id=1]
 script = ExtResource( 3 )
 combat_mode = 2
-max_action_point = -1.0
+max_action_point = 10.0
 character_act_once = false
 auto_end_turn = true
 
@@ -58,14 +58,28 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="InputArea" type="Control" parent="CombatController"]
-visible = false
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="ApLabel" type="Label" parent="CombatController"]
+margin_left = 1028.83
+margin_top = 663.298
+margin_right = 1178.83
+margin_bottom = 677.298
+text = "10/10"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
-[node name="Button" type="Button" parent="CombatController"]
+[node name="EndTurnButton" type="Button" parent="CombatController"]
 margin_left = 1200.53
 margin_top = 650.073
 margin_right = 1300.53
 margin_bottom = 690.073
 text = "End Turn"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="InputArea" type="Control" parent="CombatController"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0

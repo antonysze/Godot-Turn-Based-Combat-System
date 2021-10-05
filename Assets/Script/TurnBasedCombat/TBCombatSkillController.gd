@@ -27,8 +27,8 @@ func init_skill(skill, character_id, cast_node):
 func update_skill(skill):
 	skill_id = skill.skill_id
 	update_name(skill.skill_name)
-	update_can_cast(skill.can_cast())
 	update_cost(skill.cast_cost)
+	update_can_cast(skill.can_cast())
 	update_cooldown(skill.current_cooldown)
 
 
@@ -52,7 +52,6 @@ func update_cooldown(cooldown):
 
 
 func enable_control(enable: bool):
-
 	able_to_control = enable
 	update_cast_button()
 
