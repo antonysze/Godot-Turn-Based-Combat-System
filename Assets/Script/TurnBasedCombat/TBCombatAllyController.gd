@@ -35,12 +35,13 @@ func init_skills(skills: Array, character_id, cast_node):
 			else:
 				printerr("Cannot create skill controller without prefab")
 				break
-		_skill_controllers[i].init_skill(skills[i], character_id, cast_node)
+		_skill_controllers[i].init_skill(skills[i], character_id, cast_node, -1)
 
 
-func update_skills(skills: Array):
+func update_skills(skills: Array, ap):
 	for i in _skill_controllers.size():
-		_skill_controllers[i].update_skill(skills[i])
+		_skill_controllers[i].update_skill(skills[i], ap)
+
 
 
 func enable_control(enable: bool):

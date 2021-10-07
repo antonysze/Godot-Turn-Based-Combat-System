@@ -77,7 +77,16 @@ func add_enemy(data):
 
 
 func start_combat():
+	_game_state = CombatGameState.Begin
 	_show_log("Combat start")
+
+
+func end_combat(win: bool):
+	_game_state = CombatGameState.Ended
+	_show_log("Combat End")
+	update_end_turn_button(false)
+	for controller in _controllers.values():
+		controller.enable_control(false)
 
 
 func start_select_target(can_target_ally: bool, can_target_enemy: bool):
@@ -98,6 +107,11 @@ func update_ap(ap, max_ap = null):
 	if max_ap != null:
 		text += "/" + String(max_ap)
 	_ap_label.text = text
+
+
+func update_character_skill(allies, ap):
+	for ally in allies:
+		_controllers[ally.combat_id].update_skills(ally.skills, ap)
 
 
 func update_end_turn_button(enable: bool):
@@ -210,6 +224,7 @@ func _on_InputArea_gui_input(event: InputEvent):
 			_clear_log()
 			match _game_state:
 				CombatGameState.Begin:
+					_game_state = CombatGameState.Combat
 					emit_signal("beginning_complete")
 				CombatGameState.Combat:
 					emit_signal("next_action")

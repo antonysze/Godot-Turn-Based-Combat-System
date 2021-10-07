@@ -50,6 +50,7 @@ func get_target_name(targets):
 		if names != "":
 			names += ", "
 		names += node.name
+	return names
 
 
 func reduce_cooldown(turn = 1):

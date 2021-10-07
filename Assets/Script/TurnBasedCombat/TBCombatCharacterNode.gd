@@ -8,6 +8,8 @@ var is_ally: bool
 var max_hp setget set_max_hp
 var current_hp = 0
 var turn_finished = false
+var stats: Dictionary
+var meta_data: Dictionary
 
 
 var controller
@@ -24,6 +26,7 @@ func can_action() -> bool:
 
 func init(data): # TBCombatCharacterData
 	self.max_hp = data.get_max_hp()
+	self.stats = data.stats
 	set_hp(max_hp)
 
 

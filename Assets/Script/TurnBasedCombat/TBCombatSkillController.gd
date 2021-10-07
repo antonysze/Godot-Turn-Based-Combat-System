@@ -18,17 +18,17 @@ var able_to_control: bool
 var castable: bool
 
 
-func init_skill(skill, character_id, cast_node):
+func init_skill(skill, character_id, cast_node, ap):
 	enable_control(false)
-	update_skill(skill)
+	update_skill(skill, ap)
 	_cast_button.connect("pressed", cast_node, "_on_cast_skill", [character_id, skill_id])
 
 
-func update_skill(skill):
+func update_skill(skill, ap):
 	skill_id = skill.skill_id
 	update_name(skill.skill_name)
 	update_cost(skill.cast_cost)
-	update_can_cast(skill.can_cast())
+	update_can_cast(skill.can_cast(ap))
 	update_cooldown(skill.current_cooldown)
 
 

@@ -21,7 +21,6 @@ var enemy_slots: Array
 
 
 var ally_turn: bool
-var current_character = null
 var selected_caster = null
 var selected_skill = null
 
@@ -110,14 +109,14 @@ func init(allies: Array, enemies: Array, setting: TBCombatSetting = null):
 
 
 func add_ally(ally_data, position: int = -1):
-	ally_data.combat_id = "ally_" + String(position)
+	ally_data.combat_id = "ally_" + ally_data.name + String(character_list.size())
 	ally_data.is_ally = true
 	add_character(ally_data, ally_slots, position)
 	ui.add_ally(ally_data)
 
 
 func add_enemy(enemy_data, position: int = -1):
-	enemy_data.combat_id = "enemy_" + String(position)
+	enemy_data.combat_id = "enemy_" + enemy_data.name + String(character_list.size())
 	enemy_data.is_ally = false
 	add_character(enemy_data, enemy_slots, position)
 	ui.add_enemy(enemy_data)
@@ -159,7 +158,7 @@ func check_game_end() -> bool:
 			lose = false
 			break
 	if lose:
-		game_state = CombatGameState.Lose
+		game_state = CombatGameState.Lost
 		return true
 	var win = true
 	for enemy in enemy_slots:
@@ -173,7 +172,7 @@ func check_game_end() -> bool:
 
 
 func check_turn_end(last_action_caster):
-	if setting.auto_end:
+	if setting.auto_end_turn:
 		return game_mode_manager.check_turn_end(last_action_caster)
 	else:
 		return false
@@ -189,22 +188,25 @@ func end_turn():
 	game_mode_manager.end_turn()
 	if ui != null:
 		ui.update_end_turn_button(game_mode_manager.is_ally_turn())
+	start_turn()
 
 
 func set_action_point(point, max_point = null):
 	current_action_point = point
 	if max_point != null:
 		max_action_point = max_point
-	if ui != null:
-		ui.update_ap(point, max_action_point)
+	current_action_point = clamp(0, max_point, point)
+	if ui != null and game_mode_manager.is_ally_turn():
+		ui.update_ap(current_action_point, max_action_point)
+		ui.update_character_skill(ally_slots, current_action_point)
 
 
-func decrease_action_point(amount):
-	set_action_point(current_action_point - amount)
+func add_action_point(amount):
+	set_action_point(current_action_point + amount)
 
 
 func character_action(caster, skill, target = null):
-	decrease_action_point(skill.cast_cost)
+	add_action_point(-skill.cast_cost)
 	skill.cast(caster, target)
 	emit_signal("cast_skill", caster, skill, target)
 	if ui != null:
@@ -216,8 +218,12 @@ func character_action(caster, skill, target = null):
 	if !is_game_ended:
 		if check_turn_end(caster):
 			end_turn()
+		elif !game_mode_manager.is_ally_turn():
+			game_mode_manager.enemy_take_action()
 	else:
-		pass #end game
+		print("game ended") #end game
+		if ui != null:
+			ui.end_combat(game_state == CombatGameState.Won)
 
 
 func general_action(caster, skill):
@@ -252,6 +258,31 @@ func _on_select_skill(caster_id, skill_id):
 			or (!caster.is_ally and skill.target_type == TBCombatBaseSkill.TargetType.SingleAlly) \
 			or (caster.is_ally and skill.target_type == TBCombatBaseSkill.TargetType.SingleEnemy)
 		ui.start_select_target(can_target_ally, can_target_enemy)
+
+
+func enemy_action(caster, skill):
+	if skill.is_no_target_selection():
+		var target = _pick_skill_target(caster, skill)
+		if target == null:
+			general_action(caster, skill)
+		else:
+			character_action(caster, skill, target)
+	else:
+		var targets = _auto_pick_skill_target(caster, skill)
+		character_action(caster, skill, targets)
+
+
+func _auto_pick_skill_target(caster, skill):
+	var target = []
+	if skill.target_type == TBCombatBaseSkill.TargetType.SingleAny \
+			or (caster.is_ally and skill.target_type == TBCombatBaseSkill.TargetType.SingleAlly) \
+			or (!caster.is_ally and skill.target_type == TBCombatBaseSkill.TargetType.SingleEnemy):
+		target.append_array(ally_slots)	
+	if skill.target_type == TBCombatBaseSkill.TargetType.SingleAny \
+		or (!caster.is_ally and skill.target_type == TBCombatBaseSkill.TargetType.SingleAlly) \
+		or (caster.is_ally and skill.target_type == TBCombatBaseSkill.TargetType.SingleEnemy):
+		target.append_array(enemy_slots)
+	return target
 
 
 func _pick_skill_target(caster, skill):
