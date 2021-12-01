@@ -26,8 +26,8 @@ func start_turn():
 
     if is_ally_turn():
         restore_action_point()
-	else:
-		enemy_take_action()
+    else:
+        enemy_take_action()
 
 
 func end_turn():
